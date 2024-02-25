@@ -22,11 +22,16 @@ where:
 --line_select_threshold - Threshold for selecting some emergency values and then drawing lines (default=180)                            
 ```
 
-Examples of how the algorithm works (all these images are in the folders):
 
-<img src='/result_images/lines_result.png'>
+Examples of how the algorithm works (all these images are in the folders "Input images" and "Output images"):
 
-<img src='/result_images/building_result.png'>
+![Lines example](/result_image/lines_result.png)
 
-<img src='/result_images/road_result.png'>
+![Square example](/result_image/square_result.png)
+
+![Building example](/result_image/building_result.png)
+
+![Road example](/result_image/road_result.png)
+
+![Parking example](/result_image/parking_result.png)
 
