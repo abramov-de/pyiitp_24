@@ -27,11 +27,11 @@ Examples of how the algorithm works (all these images are in the folders "Input 
 
 ![Lines example](https://github.com/abramov-de/pyiitp_24/blob/main/HoughTransform/result_image/lines_result.png)
 
-![Square example](/result_image/square_result.png)
+![Square example](https://github.com/abramov-de/pyiitp_24/blob/main/HoughTransform/result_image/square_result.png)
 
-![Building example](/result_image/building_result.png)
+![Building example](https://github.com/abramov-de/pyiitp_24/blob/main/HoughTransform/result_image/building_result.png)
 
-![Road example](/result_image/road_result.png)
+![Road example](https://github.com/abramov-de/pyiitp_24/blob/main/HoughTransform/result_image/road_result.png)
 
-![Parking example](/result_image/parking_result.png)
+![Parking example](https://github.com/abramov-de/pyiitp_24/blob/main/HoughTransform/result_image/parking_result.png)
 
