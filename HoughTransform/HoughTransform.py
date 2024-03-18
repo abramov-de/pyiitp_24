@@ -11,7 +11,7 @@ import argparse
 # LINE_SELECT_THRESHOLD = 180
 
 
-def Hough_line_detect(canny_image):
+def Hough_line_detect(canny_image, edge_pixel_threshold=255):
     theta = np.arange(0, 180, 1)  # Theta [-90, 90] degrees ( or (0 - 180))
 
     rho_max = round(
@@ -19,7 +19,7 @@ def Hough_line_detect(canny_image):
     accumulator = np.zeros((2 * rho_max, len(theta)))  # Accumulator matrix to store the values
 
     edge_pixels = np.where(
-        canny_image == int(args["edge_pixel_threshold"]))  # Threshold to get edges pixel location (x,y)
+        canny_image == int(edge_pixel_threshold))  # Threshold to get edges pixel location (x,y)
     coordinates = list(zip(edge_pixels[0], edge_pixels[1]))
 
     cos = np.cos(np.deg2rad(theta))  # Calculate 'cos' and 'sin'
@@ -35,6 +35,29 @@ def Hough_line_detect(canny_image):
 
     return accumulator
 
+def Huogh_line_highlight(path_to_image, edge_pixel_threshold=255, lower_canny_threshold=300, upper_canny_threshold=400, line_select_threshold=180):
+    image = cv2.imread(path_to_image)
+    grayscale = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    canny_image = cv2.Canny(grayscale, int(lower_canny_threshold), int(upper_canny_threshold))
+    accumulator = Hough_line_detect(canny_image, edge_pixel_threshold=edge_pixel_threshold)
+
+    edge_pixels = np.where(
+        accumulator > int(line_select_threshold))  # Threshold some high values then draw the line
+    coordinates = list(zip(edge_pixels[0], edge_pixels[1]))
+
+    for i in range(len(coordinates)):  # Draw detected line on an original image (from OpenCV tutorial for HoughLine)
+        a = np.cos(np.deg2rad(coordinates[i][1]))
+        b = np.sin(np.deg2rad(coordinates[i][1]))
+        x0 = a * coordinates[i][0]
+        y0 = b * coordinates[i][0]
+        x1 = int(x0 + 1000 * (-b))
+        y1 = int(y0 + 1000 * (a))
+        x2 = int(x0 - 1000 * (-b))
+        y2 = int(y0 - 1000 * (a))
+
+        cv2.line(image, (x1, y1), (x2, y2), (0, 0, 255), 1)
+
+    return image
 
 if __name__ == '__main__':
 
@@ -62,7 +85,7 @@ if __name__ == '__main__':
     # upper_canny_threshold = int(args["upper_canny_threshold"])
     canny_image = cv2.Canny(grayscale, int(args["lower_canny_threshold"]), int(args["upper_canny_threshold"]))
 
-    accumulator = Hough_line_detect(canny_image)
+    accumulator = Hough_line_detect(canny_image, edge_pixel_threshold=int(args["edge_pixel_threshold"]))
 
     edge_pixels = np.where(
         accumulator > int(args["line_select_threshold"]))  # Threshold some high values then draw the line
